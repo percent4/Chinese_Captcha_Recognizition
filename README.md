@@ -1,10 +1,10 @@
-本文主要使用`CnOCR`来训练自己的OCR模型，用于汉字验证码破解。
+本项目主要使用`CnOCR`来训练自己的OCR模型，用于汉字验证码破解。
 
 ## 验证码介绍
 
 ### 三汉字验证码
 
-1. 生成验证码，使用脚本生成，参考`src/preprocess/gen_captcha.py`文件
+1. 生成验证码，使用脚本生成，参考`src/preprocess/gen_captcha_v1.py`文件
 2. 验证码样本如下：
 
 ![4003.jpg](https://s2.loli.net/2024/10/23/ilyHSdeOJLz6jus.jpg)
