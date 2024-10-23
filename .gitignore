@@ -1,0 +1,4 @@
+.idea
+src/image_tagging/static
+src/image_tagging/tagged_content.txt
+.DS_Store
