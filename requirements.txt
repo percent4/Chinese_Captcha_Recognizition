@@ -1,3 +1,0 @@
-Pillow==11.0.0
-Requests==2.32.3
-tornado==6.4.1

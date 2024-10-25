@@ -68,4 +68,4 @@ cnocr evaluate -p /workspace/code/CnOCR/runs/CnOCR-Rec/pgyahgqm/checkpoints/ch_c
 ## 参考网站
 
 1. `CnOCR`脚本工具: [https://cnocr.readthedocs.io/zh-cn/stable/command/](https://cnocr.readthedocs.io/zh-cn/stable/command/)
-2. https://zhuanlan.zhihu.com/p/2845583696 
+2. OCR入门（一）OCR模型训练实战：破解汉字验证码: [https://zhuanlan.zhihu.com/p/2845583696](https://zhuanlan.zhihu.com/p/2845583696)
