@@ -21,7 +21,7 @@ content_file_path_dict = {v: k for k, v in file_path_content_dict.items()}
 
 
 def save_tagged_content(old_file_name, old_file_path, new_file_name):
-    with open('tagged_content.txt', 'a') as f:
+    with open('4char_tagged_content.txt', 'a') as f:
         now_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         f.write(f"{now_time}\t{old_file_path}\t{old_file_name}\t{new_file_name}\n")
 

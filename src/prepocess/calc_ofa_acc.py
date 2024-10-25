@@ -12,4 +12,5 @@ for line in content:
     if origin_text == new_text:
         correct_cnt += 1
 
+print(correct_cnt, len(content))
 print(f"OFA accuracy: {correct_cnt / len(content)}")

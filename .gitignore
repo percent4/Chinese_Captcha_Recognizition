@@ -2,3 +2,4 @@
 src/image_tagging/static
 src/image_tagging/tagged_content.txt
 .DS_Store
+src/image_ocr_app/static

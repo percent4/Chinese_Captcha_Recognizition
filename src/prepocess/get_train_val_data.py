@@ -5,18 +5,19 @@
 import csv
 import json
 
-# 读取Label-Studios标注数据
-with open('../../data/project-5-at-2024-09-29-03-11-dfa34688.json', 'r') as f:
-    data = json.loads(f.read())
-
 id_lexicon_dict = {}
-for i in range(len(data)):
-    file_id = int(data[i]['file_upload'].split('-', maxsplit=1)[1].split('.')[0])
-    annotation_text = data[i]['annotations'][0]['result'][0]['value']['text'][0]
-    id_lexicon_dict[file_id] = annotation_text
+
+# 读取Label-Studios标注数据
+# with open('../../data/project-5-at-2024-09-29-03-11-dfa34688.json', 'r') as f:
+#     data = json.loads(f.read())
+#
+# for i in range(len(data)):
+#     file_id = int(data[i]['file_upload'].split('-', maxsplit=1)[1].split('.')[0])
+#     annotation_text = data[i]['annotations'][0]['result'][0]['value']['text'][0]
+#     id_lexicon_dict[file_id] = annotation_text
 
 # 读取自己标注的数据
-with open('../../data/tagged_content.txt', 'r') as f:
+with open('../../data/4char_tagged_content.txt', 'r') as f:
     lines = [_.strip() for _ in f.readlines()]
 
 for line in lines:

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload with OCR</title>
+    <!-- 引入 Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .upload-box {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .file-input {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .btn-upload {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .btn-upload:hover {
+            background-color: #0056b3;
+        }
+        .btn-clear {
+            background-color: #dc3545;
+            color: #fff;
+        }
+        .btn-clear:hover {
+            background-color: #c82333;
+        }
+        .upload-status {
+            margin-top: 20px;
+        }
+        .uploaded-images {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .uploaded-images img {
+            max-width: 150px;
+            margin: 10px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .ocr-result {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="upload-box">
+                <h1 class="text-center">Upload Your Images</h1>
+                <p class="text-center">Choose one or more images to upload (max 10MB each).</p>
+                <form action="/upload/" enctype="multipart/form-data" method="post" id="uploadForm">
+                    <div class="file-input">
+                        <input class="form-control" type="file" id="fileInput" name="files" accept="image/*" multiple required>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-upload btn-lg">Upload</button>
+                        <button type="button" class="btn btn-clear btn-lg" id="clearBtn">Clear</button>
+                    </div>
+                </form>
+                <div class="upload-status text-center" id="statusMessage"></div>
+                <div class="uploaded-images" id="imageContainer"></div>
+                <div id="ocrResults"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 引入 Bootstrap JS 和 Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- 上传状态提示与图片展示、OCR结果展示 -->
+<script>
+    const uploadForm = document.getElementById('uploadForm');
+    const statusMessage = document.getElementById('statusMessage');
+    const imageContainer = document.getElementById('imageContainer');
+    const ocrResults = document.getElementById('ocrResults');
+    const clearBtn = document.getElementById('clearBtn');
+    const fileInput = document.getElementById('fileInput');
+
+    uploadForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        statusMessage.textContent = 'Uploading...';
+        const formData = new FormData(uploadForm);
+
+        fetch('/upload/', {
+            method: 'POST',
+            body: formData
+        }).then(response => response.json())
+          .then(data => {
+              if (data.uploaded_files) {
+                  statusMessage.innerHTML = `<div class="alert alert-success">Upload successful! Uploaded files:</div>`;
+                  imageContainer.innerHTML = '';  // 清空之前显示的图片
+                  ocrResults.innerHTML = '';      // 清空之前的OCR结果
+
+                  data.file_urls.forEach((url, index) => {
+                      // 显示图片缩略图
+                      const imgElement = document.createElement('img');
+                      imgElement.src = url;
+                      imageContainer.appendChild(imgElement);
+
+                      // 显示OCR结果
+                      const ocrDiv = document.createElement('div');
+                      ocrDiv.className = "ocr-result";
+                      ocrDiv.innerHTML = `<strong>Text from image ${index + 1}:</strong><pre>${data.ocr_results[index]}</pre>`;
+                      ocrResults.appendChild(ocrDiv);
+                  });
+              } else {
+                  statusMessage.innerHTML = `<div class="alert alert-danger">Error uploading files.</div>`;
+              }
+          }).catch(error => {
+              statusMessage.innerHTML = `<div class="alert alert-danger">Error: ${error}</div>`;
+          });
+    });
+
+    // 清空页面内容，包括上传文件框、状态消息、图片和OCR结果
+    clearBtn.addEventListener('click', function() {
+        statusMessage.textContent = '';   // 清空状态消息
+        imageContainer.innerHTML = '';    // 清空上传的图片
+        ocrResults.innerHTML = '';        // 清空OCR结果
+        fileInput.value = '';             // 清空上传文件框
+    });
+</script>
+
+</body>
+</html>

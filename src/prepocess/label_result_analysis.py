@@ -5,21 +5,21 @@
 import json
 from collections import defaultdict
 
-# 读取Label-Studio的标注结果
-with open('../../data/project-5-at-2024-09-29-03-11-dfa34688.json', 'r') as f:
-    data = json.loads(f.read())
-
-
 char_cnt_dict = defaultdict(int)
-for i in range(len(data)):
-    annotation_text = data[i]['annotations'][0]['result'][0]['value']['text'][0]
-    if '串' in annotation_text:
-        print(data[i])
-    for char in annotation_text:
-        char_cnt_dict[char] += 1
+
+# 读取Label-Studio的标注结果
+# with open('../../data/project-5-at-2024-09-29-03-11-dfa34688.json', 'r') as f:
+#     data = json.loads(f.read())
+#
+# for i in range(len(data)):
+#     annotation_text = data[i]['annotations'][0]['result'][0]['value']['text'][0]
+#     if '串' in annotation_text:
+#         print(data[i])
+#     for char in annotation_text:
+#         char_cnt_dict[char] += 1
 
 # 读取自己标注的数据
-with open('../../data/tagged_content.txt', 'r') as f:
+with open('../../data/4char_tagged_content.txt', 'r') as f:
     lines = [_.strip() for _ in f.readlines()]
 
 for line in lines:
@@ -27,7 +27,7 @@ for line in lines:
     for char in tagged_content:
         char_cnt_dict[char] += 1
 
-print(f"共有标注样本个数：{len(data) + len(lines)}")
+print(f"共有标注样本个数：{len(lines)}")
 
 # 保存数据
 with open('../../data/chars.txt', 'w') as f:
